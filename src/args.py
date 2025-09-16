@@ -1,11 +1,12 @@
 import argparse
 
 from src.config.available_banks import AVAILABLE_BANKS
-from src.utils.date import get_formatted_date_for_nu
+from datetime import datetime
 
 
 def get_args():
     parser = argparse.ArgumentParser(description="generating fakes payment receipts")
+    now = datetime.now()
     parser.add_argument(
         "-b",
         "--bank",
@@ -18,22 +19,8 @@ def get_args():
         "-d",
         "--date",
         required=False,
-        default=get_formatted_date_for_nu(),
-        help="date of the payment (default: current date in format '01 SET 2025 - 14:19:06')",
-    )
-    parser.add_argument(
-        "-cs",
-        "--cpf-sender",
-        required=False,
-        default="***-999-999-**",
-        help="CPF of the payer (default: '***-999-999-**')",
-    )
-    parser.add_argument(
-        "-cr",
-        "--cpf-recipient",
-        required=False,
-        default="***-999-999-**",
-        help="CPF of the recipient (default: '***-999-999-**')",
+        default=str(now),
+        help=f"date of the payment (default: {str(now).upper()})",
     )
     parser.add_argument(
         "-s",
@@ -77,6 +64,7 @@ def get_args():
         default="123,50",
         help="value to be used in the receipt (default: 123,50)",
     )
+
     parser.add_argument(
         "-o",
         "--output",
