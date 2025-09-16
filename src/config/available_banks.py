@@ -1,0 +1,1 @@
+AVAILABLE_BANKS = ['nu', 'itau']
