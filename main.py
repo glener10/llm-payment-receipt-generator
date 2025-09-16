@@ -9,6 +9,7 @@ from src.args import get_args
 from src.env import get_api_key
 from src.prompt_picker import prompt_picker
 
+
 def main():
     args = get_args()
     api_key = get_api_key()
@@ -16,7 +17,7 @@ def main():
     client = genai.Client(api_key=api_key)
 
     image_input = image_examples_picker(args.bank.lower())
-    prompt = prompt_picker(args.bank.lower())
+    prompt = prompt_picker(args)
 
     print("🤖 generating image...")
     NANO_BANANA_MODEL = "gemini-2.5-flash-image-preview"
@@ -35,7 +36,7 @@ def main():
         image = Image.open(BytesIO(image_parts[0]))
         image.save(args.output)
         print(f"✅ image saved to {args.output}")
-        #image.show()
+        # image.show()
 
 
 if __name__ == "__main__":
