@@ -42,12 +42,30 @@ You can clean the environment using
 $ make clean
 ```
 
-To pass dynamic values ​​to fields, check the required and optional parameters in the [`src/args.py`](src/args.py) file.
-
-To execute you can run the script using
+Check files format with
 
 ```
-$ python main.py
+$ make lint
+```
+
+Format files with
+
+```
+$ make format
+```
+
+to exec:
+
+```
+$ make run
+```
+
+To pass dynamic values ​​to fields, check the required and optional parameters in the [`src/args.py`](src/args.py) file.
+
+Example executing with all arguments:
+
+```
+$ make run ARGS="-b \"nu\""
 ```
 
 <div id="author"></div>

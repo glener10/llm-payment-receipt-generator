@@ -1,20 +1,37 @@
-SHELL := /bin/bash
+SHELL := $(shell echo $$SHELL)
 
-.PHONY: install run clean
+VENV_DIR = .venv
+VENV_PYTHON = $(VENV_DIR)/bin/python
+VENV_RUFF = $(VENV_DIR)/bin/ruff
 
-install:
-	@echo "Creating and activating virtual environment..."
-	python3 -m venv venv
-	@echo "Installing dependencies..."
-	source venv/bin/activate && pip3 install -r requirements.txt
-	@echo "Installation complete"
+.PHONY: setup lint format run clean
 
-run:
-	@echo "Starting the application..."
-	source venv/bin/activate && python3 main.py
+setup:
+	@echo "Checking for '$(VENV_DIR)' virtual environment..."
+	@if [ ! -d "$(VENV_DIR)" ]; then \
+		echo "'$(VENV_DIR)' not found. Creating and installing dependencies..."; \
+		python3 -m venv $(VENV_DIR); \
+		$(VENV_PYTHON) -m pip install --upgrade pip; \
+		$(VENV_PYTHON) -m pip install -r requirements.txt; \
+		echo "Setup complete!"; \
+	else \
+		echo "'$(VENV_DIR)' already exists. To reinstall, run 'make clean setup'."; \
+	fi
+
+lint: setup
+	@echo "Linting code with ruff..."
+	@$(VENV_RUFF) check .
+
+format: setup
+	@echo "Formatting code with ruff..."
+	@$(VENV_RUFF) format .
+
+run: setup
+	@echo "Running the application..."
+	@$(VENV_PYTHON) main.py $(ARGS)
 
 clean:
 	@echo "Removing virtual environment and temporary files..."
-	rm -rf venv
-	find . -name "__pycache__" -exec rm -rf {} +
-	find . -name "*.pyc" -exec rm -f {} +
+	@rm -rf $(VENV_DIR)
+	@find . -type d -name "__pycache__" -exec rm -rf {} +
+	@find . -type f -name "*.pyc" -delete
