@@ -1,1 +1,1 @@
-AVAILABLE_BANKS = ['nu', 'itau']
+AVAILABLE_BANKS = ["nu"]
