@@ -30,11 +30,17 @@ Attention! All sample receipt files are fake! ⚠️
 
 ![gemini key with linked billing account](./docs/gemini_key.png)
 
-<div id="using"></div>
+To setup environment use (you will need [venv](https://docs.python.org/pt-br/3.13/library/venv.html)):
 
-## ☕ **Using**
+```
+$ make setup
+```
 
-First, check the [dependencies](#dependenciesandenvironment) process
+And enable the virtual ambient using:
+
+```
+$ source .venv/bin/activate
+```
 
 You can clean the environment using
 
@@ -42,30 +48,16 @@ You can clean the environment using
 $ make clean
 ```
 
-Check files format with
+<div id="using"></div>
 
-```
-$ make lint
-```
+## ☕ **Using**
 
-Format files with
-
-```
-$ make format
-```
-
-to exec:
-
-```
-$ make run
-```
+First, check the [dependencies](#dependenciesandenvironment) process
 
 To pass dynamic values ​​to fields, check the required and optional parameters in the [`src/args.py`](src/args.py) file.
 
-Example executing with all arguments:
-
 ```
-$ make run ARGS="-b \"nu\""
+$ python main.py
 ```
 
 <div id="author"></div>
